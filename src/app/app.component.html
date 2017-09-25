@@ -1,0 +1,120 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center" class="container-fluid btn-primary">
+  <h1>
+    Welcome to {{title}}!
+  </h1>
+  <img width="50" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+</div>
+<div class="container">
+  <div class="spacio"></div>
+    
+  <h2>UPLOAD TEST </h2> 
+  <div class="drop-container btn-success" ngFileDrop (uploadOutput)="onUploadOutput($event)" 
+  [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">
+    <h1>Drag & Drop</h1>
+  </div>
+  
+  <label class="upload-button">
+    <input  type="file" ngFileSelect (uploadOutput)="onUploadOutput($event)" 
+    [uploadInput]="uploadInput" multiple>
+    or choose file(s)
+  </label>
+  
+  <button type="button" class="start-upload-btn btn-primary" (click)="startUpload()">
+    Start Upload
+  </button>
+ 
+    <div class="spacio"></div>
+
+  <div>
+    <h2 class="btn-info">Librería ng2-file-upload</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <form> 
+        <div class="form-group">
+          <label for="single"><h3>single</h3></label>
+          <input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />                                  
+        </div>
+        <button type="button" class="btn btn-success btn-s"
+          (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="glyphicon glyphicon-upload"></span> Upload all
+        </button><br />
+       </form>
+     </div>
+
+    <div class="col-md-8">
+        <h3>File Upload with Angular 2 and Node</h3>
+        Queue length: {{ uploader?.queue?.length }}
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="50%">Name</th>
+                <th>Size</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader.queue">
+                <td><strong>{{ item.file.name }}</strong></td>
+                <td nowrap>{{ item.file.size/1024/1024 | number:'.2' }} MB</td>
+                <td>
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs"
+                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs"
+                            (click)="item.cancel()" [disabled]="!item.isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            (click)="item.remove()">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <div>
+                Queue progress:
+                <div class="progress" style="">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s"
+                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>
+            <button type="button" class="btn btn-warning btn-s"
+                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            </button>
+            <button type="button" class="btn btn-danger btn-s"
+                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+        </div>
+      </div>  
+    </div>
+</div>
+
+
+  </div>
+  
+</div>
+
+
